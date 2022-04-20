@@ -50,7 +50,6 @@ class RateLimiting {
   }
   
   void cancel() {
-    _queue.clear();
     _calls = 0;
     _timer?.cancel();
     _timer = null;
