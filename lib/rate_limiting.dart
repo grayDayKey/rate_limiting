@@ -79,7 +79,7 @@ class RateLimiting {
     }
   }
   
-  bool get _timerIsActive => _timer != null && _timer?.isActive == true;
+  bool get _timerIsActive => _timer?.isActive == true;
   
   bool get _canProcess => _timerIsActive && _calls < maxCalls;
 }

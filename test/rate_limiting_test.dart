@@ -8,7 +8,7 @@ void main() {
     int callsCount = 0;
     const maxAttempts = 2;
     const duration = Duration(milliseconds: 100);
-    final rateLimiting = RateLimiting(maxAttempts: maxAttempts, duration: duration);
+    final rateLimiting = RateLimiting(maxCalls: maxAttempts, duration: duration);
     
     for (int i = 0; i < maxAttempts + 1; i++) {
       rateLimiting.process(() {
