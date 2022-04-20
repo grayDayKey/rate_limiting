@@ -10,6 +10,16 @@ typedef Routine = FutureOr<void> Function();
 class RateLimiting {
   
   RateLimiting({ required this.maxAttempts, required this.duration,});
+
+  factory RateLimiting.fromArray(List<int> arr) {
+    assert(arr.length == 2);
+    final timeMs = arr.first;
+    final requestCount = arr.last;
+
+    return RateLimiting(
+      maxAttempts: requestCount,
+      duration: Duration(milliseconds: timeMs));
+  }
   
   final Duration duration;
   final int maxAttempts;
