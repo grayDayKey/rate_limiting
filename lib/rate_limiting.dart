@@ -9,7 +9,7 @@ typedef Routine = FutureOr<void> Function();
 /// RateLimiting
 class RateLimiting {
   
-  RateLimiting({ required this.maxAttempts, required this.duration,});
+  RateLimiting({ required this.maxCalls, required this.duration,});
 
   factory RateLimiting.fromArray(List<int> arr) {
     assert(arr.length == 2);
@@ -17,16 +17,16 @@ class RateLimiting {
     final requestCount = arr.last;
 
     return RateLimiting(
-      maxAttempts: requestCount,
+      maxCalls: requestCount,
       duration: Duration(milliseconds: timeMs));
   }
   
   final Duration duration;
-  final int maxAttempts;
+  final int maxCalls;
   
   Timer? _timer;
   
-  int _attempts = 0;
+  int _calls = 0;
   
   final Queue<Routine> _queue = Queue<Routine>();
   
@@ -39,7 +39,7 @@ class RateLimiting {
   FutureOr<void> _runProcess(Routine routine) async {
     if (_canProcess) {
       try {
-        _attempts++;
+        _calls++;
         await routine();
       } catch (_) {
         
@@ -51,7 +51,7 @@ class RateLimiting {
   
   void cancel() {
     _queue.clear();
-    _attempts = 0;
+    _calls = 0;
     _timer?.cancel();
     _timer = null;
   }
@@ -81,5 +81,5 @@ class RateLimiting {
   
   bool get _timerIsActive => _timer != null && _timer?.isActive == true;
   
-  bool get _canProcess => _timerIsActive && _attempts < maxAttempts;
+  bool get _canProcess => _timerIsActive && _calls < maxCalls;
 }
