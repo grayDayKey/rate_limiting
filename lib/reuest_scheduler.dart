@@ -57,14 +57,8 @@ class RequestScheduler {
   }
 
   void _restartTimer() {
-    if (limits.currentEffectiveDurationLimit ==
-        limits.longestEffectiveDurationLimit) {
-      if (_requests > 0) {
-        _requests = 0;
-        _cancelTimer();
-        _startTimer();
-      }
-    }
+    _cancelTimer();
+    _startTimer();
   }
 
   void _cancelTimer() {
